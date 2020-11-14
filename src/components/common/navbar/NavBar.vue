@@ -19,7 +19,7 @@ export default {
 </script>
 <style  scoped>
 .nav-bar {
-  color:#f0f0f0;
+  
   display: flex;
   
   line-height: 44px;
@@ -32,7 +32,7 @@ export default {
 }
 .center {
   flex: 1;
-  
+  color: #f0f0f0;
   font-size: 20px;
 }
 .right {
