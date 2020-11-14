@@ -3,7 +3,7 @@
   <div class="goods-list">
     <goods-list-item
       v-for="item in goods"
-      :key="item.link"
+      :key="item.title"
       :goods-item="item"
     ></goods-list-item>
   </div>

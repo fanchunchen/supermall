@@ -106,6 +106,7 @@ export default {
         // console.log(res);
         // 将轮播图和推荐数据传给组件
         this.banners = res.data.banner.list;
+        // console.log(this.banners)
         this.recommend = res.data.recommend.list;
       });
     },

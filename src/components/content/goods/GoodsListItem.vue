@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="goods-list-item">
-    <img @load="imageLoad" :src="goodsItem.show.img" alt=""  />
+  <div class="goods-list-item" @click="itemClick">
+    <img @load="imageLoad" :src="showImage" alt="" />
     <p>{{ goodsItem.title }}</p>
     <span class="price">{{ goodsItem.price }}</span
     ><span class="collect">{{ goodsItem.cfav }}</span>
@@ -22,10 +22,19 @@ export default {
       },
     },
   },
-  methods:{imageLoad(){this.$bus.$emit('imageLoad')}
-    
+  methods: {
+    imageLoad() {
+      this.$bus.$emit("imageLoad");
+    },
+    itemClick(iid) {
+      this.$router.push("/detail/" +this.goodsItem.iid);
+    },
   },
- 
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img;
+    },
+  },
 
   components: {},
 };

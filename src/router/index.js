@@ -1,10 +1,11 @@
-const originalPush = VueRouter.prototype.push
-  VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+// const originalPush = VueRouter.prototype.push
+//   VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Detail from 'views/detail/Detail'
 
 
 
@@ -16,10 +17,10 @@ const Profile = () => import('views/profile/Profile')
 
 
 
-const VueRouterPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (to) {
-  return VueRouterPush.call(this, to).catch(err => err)
-}
+// const VueRouterPush = VueRouter.prototype.push
+// VueRouter.prototype.push = function push (to) {
+//   return VueRouterPush.call(this, to).catch(err => err)
+// }
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,8 @@ const routes = [
     { path: '/home', component: Home },
     { path: '/category', component: Category },
     { path: '/cart', component: Cart },
-    { path: '/profile', component: Profile }
+    { path: '/profile', component: Profile },
+    {path:'/detail/:iid',component:Detail}
 
 
 ]
