@@ -4,7 +4,7 @@
     <tab-control
       ref="tabControl2"
       v-show="isFixed"
-      @itemClick="tabClick"
+      @tabClick="tabClick"
       :titles="titles"
       class="tab"
     ></tab-control>

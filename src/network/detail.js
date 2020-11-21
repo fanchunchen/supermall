@@ -22,6 +22,7 @@ export class Goods {
         this.price = itemInfo.price
         this.columns = columns
         this.services = shopInfo.services
+        this.desc = itemInfo.desc
     }
 }
 export class Shop {

@@ -1,13 +1,12 @@
-<<<<<<< HEAD
 <!--  -->
 <template>
   <div class="tab-control">
     <div
-      class="tab-control-item"
-      :class="{ active: currentIndex == index }"
-      @click="tabControlClick(index)"
       v-for="(item, index) in titles"
-      :key="index"
+      v-bind:key="item"
+      class="tab-control-item"
+      :class="{ active: index == currentIndex }"
+      @click="itemClick(index)"
     >
       <span>{{ item }}</span>
     </div>
@@ -16,7 +15,6 @@
 
 <script>
 export default {
-  name: "TabControl",
   data() {
     return { currentIndex: 0 };
   },
@@ -29,9 +27,9 @@ export default {
     },
   },
   methods: {
-    tabControlClick(index) {
-      this.currentIndex = index;
-      this.$emit('itemClick',index)
+    itemClick(index) {
+       this.currentIndex = index;
+      this.$emit('tabClick',index)
     },
   },
 
@@ -42,77 +40,20 @@ export default {
 .tab-control {
   display: flex;
   text-align: center;
-  background-color: #f0f0f0;
-  line-height: 40px;
   font-size: 15px;
+  height: 40px;
+  line-height: 40px;
+  z-index: 9;
+  background-color: #f6f6f6;
 }
-.tab-control .tab-control-item {
+.tab-control-item {
   flex: 1;
 }
+.active {
+    color: var(--color-high-text);
+  }
 .active span {
   border-bottom: 3px solid pink;
   padding: 5px;
 }
-.active {
-  color: pink;
-}
-=======
-<!--  -->
-<template>
-  <div class="tab-control">
-    <div
-      class="tab-control-item"
-      :class="{ active: currentIndex == index }"
-      @click="tabControlClick(index)"
-      v-for="(item, index) in titles"
-      :key="index"
-    >
-      <span>{{ item }}</span>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: "TabControl",
-  data() {
-    return { currentIndex: 0 };
-  },
-  props: {
-    titles: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-  },
-  methods: {
-    tabControlClick(index) {
-      this.currentIndex = index;
-      this.$emit('itemClick',index)
-    },
-  },
-
-  components: {},
-};
-</script>
-<style  scoped>
-.tab-control {
-  display: flex;
-  text-align: center;
-  background-color: #f0f0f0;
-  line-height: 40px;
-  font-size: 15px;
-}
-.tab-control .tab-control-item {
-  flex: 1;
-}
-.active span {
-  border-bottom: 3px solid pink;
-  padding: 5px;
-}
-.active {
-  color: pink;
-}
->>>>>>> a21f46653376ec71621586f593c1baad12cf33c6
 </style>

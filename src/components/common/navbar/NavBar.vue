@@ -19,9 +19,9 @@ export default {
 </script>
 <style  scoped>
 .nav-bar {
-  
   display: flex;
-  
+  position: relative;
+  z-index: 10;
   line-height: 44px;
 
   text-align: center;

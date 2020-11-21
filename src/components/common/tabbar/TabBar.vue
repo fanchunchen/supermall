@@ -23,6 +23,6 @@ export default {
   bottom: 0;
   display: flex;
   background-color: #f6f6f6;
-  z-index:9
+ 
 }
 </style>

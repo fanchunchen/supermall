@@ -1,13 +1,18 @@
 <!--  -->
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav"></detail-nav-bar>
+    <detail-nav-bar
+      @itemClick="itemClick"
+      ref="nav"
+      class="detail-nav"
+    ></detail-nav-bar>
 
     <scroll
       class="content"
       :pull-up-load="true"
       :probe-type="3"
       ref="detailScroll"
+      @scroll="scroll"
     >
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods" />
@@ -24,9 +29,10 @@
         ref="comment"
         :comment-info="commentInfo"
       ></detail-comment-info>
-      <!-- <detail-recommend-info></detail-recommend-info> -->
+
       <goods-list ref="recommend" :goods="recommends"></goods-list>
     </scroll>
+    <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
   </div>
 </template>
 
@@ -38,6 +44,7 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import GoodsList from "components/content/goods/GoodSList";
 
@@ -62,6 +69,8 @@ export default {
       paramInfo: {},
       commentInfo: {},
       recommends: [],
+      themeTopYs: [],
+      // currentIndex: 0,
     };
   },
   mounted() {
@@ -73,7 +82,7 @@ export default {
     this.iid = this.$route.params.iid;
 
     getDetail(this.iid).then((res) => {
-    //   console.log(res.result);
+      //   console.log(res.result);
       const data = res.result;
       this.topImages = data.itemInfo.topImages;
       this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo);
@@ -104,7 +113,8 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    
+    DetailBottomBar,
+
     Scroll,
 
     GoodsList,
@@ -112,6 +122,41 @@ export default {
   methods: {
     imageLoad() {
       this.$refs.detailScroll.refresh();
+      this.themeTopYs = [];
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.param.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+
+      this.themeTopYs.push(Number.MAX_VALUE);
+      // console.log(this.themeTopYs);
+    },
+    itemClick(index) {
+      this.$refs.detailScroll.scrollTo(0, -this.themeTopYs[index]);
+    },
+    scroll(position) {
+      const positionY = -position.y;
+      for (let i = 0; i < this.themeTopYs.length - 1; i++) {
+        if (
+          positionY >= this.themeTopYs[i] &&
+          positionY < this.themeTopYs[i + 1]
+        ) {
+          // this.currentIndex = i;
+          // this.$refs.nav.currentIndex = this.currentIndex;
+          this.$refs.nav.currentIndex = i;
+        }
+        // console.log(this.currentIndex);
+      }
+    },
+    addToCart() {
+      // console.log(1);
+      let product = {};
+      product.iid = this.iid;
+      product.title = this.goods.title;
+      product.price = this.goods.realPrice;
+      product.image = this.topImages[0];
+      product.desc = this.goods.desc;
+      this.$store.dispatch("addCart", product);
     },
   },
 };
@@ -134,7 +179,7 @@ export default {
   top: 44px;
   left: 0;
   right: 0;
-  bottom: 59px;
+  bottom: 30px;
   overflow: hidden;
 }
 </style>
